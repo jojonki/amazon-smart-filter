@@ -18,13 +18,17 @@ function updateVisibility(visibility) {
                 let p_title_dom = p.getElementsByClassName('a-text-normal')[0];
                 if (p_title_dom !== undefined) {
                     // console.log('title: ' + p_title_dom.textContent.substr(0, 20));
-                    let badge_text = p.getElementsByClassName('a-badge-text')[0];
                     let time_sale_flag = false;
-
-                    if (badge_text !== undefined) {
-                        // console.log('badge text;' + badge_text.textContent);
-                        time_sale_flag = badge_text.textContent == 'タイムセール';
+                    console.log('show_time_sale ' + localStorage.getItem('show_time_sale'));
+                    if (localStorage.getItem('show_time_sale') == 'true') {
+                        let badge_text = p.getElementsByClassName('a-badge-text')[0];
+                        if (badge_text !== undefined) {
+                            // console.log('badge text;' + badge_text.textContent);
+                            time_sale_flag = badge_text.textContent == 'タイムセール';
+                        }
                     }
+
+
                     let price_down_flag = p.getElementsByClassName('a-text-price')[0] !== undefined;
                     let coupon_flag = p.getElementsByClassName('s-coupon-unclipped')[0] !== undefined;
                     // console.log(time_sale_flag + ', ' + price_down_flag);
@@ -61,7 +65,6 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
         // toggle
         if (msg.command == "notify_command") {
             let visibility = localStorage.getItem('visibility');
-            console.log(visibility);
             if (visibility == 'show') {
                 visibility = false;
                 localStorage.setItem('visibility', 'hide');
@@ -79,6 +82,17 @@ window.addEventListener("load", function load(event) {
     window.removeEventListener("load", load, false); //remove listener, no longer needed
     // alert('hoge');
     //enter here the action you want to do once loaded 
+    chrome.storage.sync.set({ 'foo': 'hello', 'bar': 'hi', 'hoge': true }, function () {
+        console.log('Settings saved');
+        chrome.storage.sync.get(['foo', 'bar'], function (items) {
+            console.log('Settings retrieved', items);
+        });
+    });
+    console.log('retrieve--');
+    chrome.storage.sync.get(['foo', 'bar', 'hoge'], function (items) {
+        console.log('2Settings retrieved', items);
+    });
+
 
 
     let visibility = localStorage.getItem('visibility');
