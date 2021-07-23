@@ -1,0 +1,41 @@
+{
+    "manifest_version": 2,
+    "name": "Amazon Smart Filter",
+    "description": "",
+    "version": "0.1",
+    "permissions": [
+        "activeTab",
+        "https://www.amazon.co.jp/*",
+        "storage"
+    ],
+    "background": {
+        "scripts": [
+            "jquery-3.4.1.min.js",
+            "background.js"
+        ],
+        "persistent": false
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.amazon.co.jp/*"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "css": [
+                "switch.css"
+            ]
+        }
+    ],
+    "commands": {
+        "sale-visibility-toggle": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+S",
+                "mac": "MacCtrl+Shift+S"
+            },
+            "description": "Sale Show/Hide",
+            "global": false
+        }
+    }
+}
