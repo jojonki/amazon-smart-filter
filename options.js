@@ -3,7 +3,7 @@ let option_list = [
     'show_time_sale',
     'show_coupon',
     'show_discount',
-    'hide_sponsor',
+    'show_sponsor',
 ];
 
 function save_options() {
