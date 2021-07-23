@@ -1,12 +1,12 @@
 // alert('content');
-function toggleSalesVisibility() {
-    let key = "visibility"
-    let visibility = localStorage.getItem(key);
-    if (visibility == 'show') {
-        visibility = true;
-    } else {
-        visibility = false;
-    }
+function updateVisibility(visibility) {
+    // let key = "visibility"
+    // let visibility = localStorage.getItem(key);
+    // if (visibility == 'show') {
+    //     visibility = true;
+    // } else {
+    //     visibility = false;
+    // }
 
     // this.document.title = 'aaa';
     let products = this.document.getElementsByClassName('s-result-item');
@@ -51,21 +51,26 @@ function toggleSalesVisibility() {
             }
         }
     }
-    document.getElementById("togBtn").checked = !visibility;
-    if (visibility == true) {
-        visibility = "hide";
-    } else {
-        visibility = "show";
-    }
-    localStorage.setItem(key, visibility);
 
 }
+
 
 // Listen for messages
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     if (msg.command) {
+        // toggle
         if (msg.command == "notify_command") {
-            toggleSalesVisibility();
+            let visibility = localStorage.getItem('visibility');
+            console.log(visibility);
+            if (visibility == 'show') {
+                visibility = false;
+                localStorage.setItem('visibility', 'hide');
+            } else {
+                visibility = true;
+                localStorage.setItem('visibility', 'show');
+            }
+            document.getElementById("togBtn").checked = !visibility;
+            updateVisibility(visibility);
         }
     }
 });
@@ -76,11 +81,30 @@ window.addEventListener("load", function load(event) {
     //enter here the action you want to do once loaded 
 
 
-    let dom = ' <label class="switch"><input type="checkbox" id="togBtn" onclick="toggleSalesVisibility()"><div class="slider round"></div></label>';
+    let visibility = localStorage.getItem('visibility');
+    let checked_status = '';
+    if (visibility == 'show') {
+        visibility = true;
+    } else {
+        visibility = false;
+        checked_status = 'checked="checked"';
+    }
+    let dom = '<label class="switch"><input type="checkbox"  ' + checked_status + ' id = "togBtn"> <div class="slider round"></div></label> ';
     document.getElementById('nav-search').insertAdjacentHTML("beforeend", dom);
     document.getElementById('togBtn').addEventListener('click', function () {
-        toggleSalesVisibility();
+        console.log('clicked ' + this.checked);
+        if (this.checked == true) {
+            // visibility set to false
+            updateVisibility(false);
+            localStorage.setItem('visibility', 'hide');
+
+        } else {
+            updateVisibility(true);
+            localStorage.setItem('visibility', 'show');
+        }
     });
+
+    updateVisibility(visibility);
     return;
 
     this.document.title = 'hoge';
