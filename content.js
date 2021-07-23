@@ -83,8 +83,8 @@ window.addEventListener("load", function load(event) {
         let filter = items.filter;
         let checked_status = '';
         if (filter) {
-        } else {
             checked_status = 'checked="checked"';
+        } else {
         }
         let dom = '<label class="switch"><input type="checkbox"  ' + checked_status + ' id = "togBtn"> <div class="slider round"></div></label> ';
         document.getElementById('nav-search').insertAdjacentHTML("beforeend", dom);
