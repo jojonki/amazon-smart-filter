@@ -5,10 +5,9 @@ function filterProducts(filter) {
         'show_coupon',
         'show_discount',
         'show_sponsor',
+        'enable_associate',
     ];
     chrome.storage.sync.get(option_list, function (items) {
-        console.log('----');
-        console.log(items);
         let products = this.document.getElementsByClassName('s-result-item');
         for (let i = 0; i < products.length; i++) {
             let p = products[i];
@@ -18,6 +17,8 @@ function filterProducts(filter) {
                     let p_title_dom = p.getElementsByClassName('a-text-normal')[0];
                     if (p_title_dom !== undefined) {
                         // console.log('title: ' + p_title_dom.textContent.substr(0, 20));
+
+
                         let time_sale_flag = false;
                         let badge_text = p.getElementsByClassName('a-badge-text')[0];
                         if (badge_text !== undefined) {
@@ -32,6 +33,25 @@ function filterProducts(filter) {
                         let may_sponsor_dom = p.getElementsByClassName('a-color-secondary')[0];
                         if (may_sponsor_dom !== undefined && may_sponsor_dom.textContent == 'スポンサー') {
                             sponsor_flag = true;
+                        }
+                        if (items.enable_associate) {
+                            let link_list = document.getElementsByClassName('a-link-normal');
+                            for (let j = 0; j < link_list.length; j++) {
+                                let cur_url = link_list[j].href;
+                                if (sponsor_flag) {
+                                    cur_url = cur_url.split('url=')[1];
+                                    if (cur_url !== undefined && cur_url.length > 0) {
+                                        cur_url = cur_url.split('%2Fref')[0];
+                                    }
+                                    if (cur_url !== undefined && !cur_url.endsWith("tag=jonki-22")) {
+                                        link_list[j].setAttribute('href', unescape(cur_url) + "?tag=jonki-22");
+                                    }
+                                } else {
+                                    if (cur_url !== undefined && !cur_url.endsWith("tag=jonki-22")) {
+                                        link_list[j].setAttribute('href', cur_url + "&tag=jonki-22");
+                                    }
+                                }
+                            }
                         }
 
                         if (filter) {

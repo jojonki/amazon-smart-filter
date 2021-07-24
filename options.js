@@ -4,6 +4,7 @@ let option_list = [
     'show_coupon',
     'show_discount',
     'show_sponsor',
+    'enable_associate',
 ];
 
 function save_options() {

@@ -24,6 +24,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
             'show_coupon': true,
             'show_discount': true,
             'show_sponsor': false,
+            'enable_associate': true,
         };
         chrome.storage.sync.set(opts, function () {
             // console.log('Option saved');
