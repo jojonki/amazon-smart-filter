@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Amazon Smart Filter",
-    "description": "",
+    "description": "Amazonのお買い得商品のみを表示する",
     "version": "0.1",
     "permissions": [
         "activeTab",
@@ -32,7 +32,7 @@
         "open_in_tab": false
     },
     "commands": {
-        "sale-visibility-toggle": {
+        "sale-filter-toggle": {
             "suggested_key": {
                 "default": "Ctrl+Shift+S",
                 "mac": "MacCtrl+Shift+S"

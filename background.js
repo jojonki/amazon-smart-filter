@@ -1,8 +1,6 @@
 "use strict";
 chrome.commands.onCommand.addListener(function (command) {
-    console.log("onCommand:", command);
-
-    if (command !== undefined) {
+    if (command == 'sale-filter-toggle') {
         chrome.tabs.query({
             active: true,
             lastFocusedWindow: true

@@ -84,6 +84,7 @@ function filterProducts(filter) {
 // Listen for messages
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     if (msg.command) {
+        console.log('---' + msg.command);
         // toggle
         if (msg.command == "notify_command") {
             chrome.storage.sync.get(['filter'], function (items) {
@@ -93,12 +94,19 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
                 chrome.storage.sync.set({ 'filter': filter }, function (items) {
                 });
             });
+        } else if (msg.command == "notify_loaded_page") {
+            console.log('-----44$')
+            chrome.storage.sync.get(['filter'], function (items) {
+                console.log('----filter products ' + item.filter)
+                filterProducts(items.filter);
+            });
+            filterProducts(true);
         }
     }
 });
 
-window.addEventListener("load", function load(event) {
-    window.removeEventListener("load", load, false); //remove listener, no longer needed
+
+function applyFilter() {
     chrome.storage.sync.get(['filter'], function (items) {
         let filter = items.filter;
         let checked_status = '';
@@ -117,7 +125,18 @@ window.addEventListener("load", function load(event) {
 
         filterProducts(filter);
     });
+}
+window.addEventListener("load", function load(event) {
+    // window.removeEventListener("load", load, false); //remove listener, no longer needed
+    let html = "window.history.pushState = function(a,b,c) { applyFilter(); };";
+    let headID = document.getElementsByTagName("head")[0];
+    let newScript = document.createElement('script');
+    newScript.type = 'text/javascript';
+    newScript.innerHTML = html;
+    headID.appendChild(newScript);
+
+    applyFilter();
+
     return;
-
-
 }, false);
+
