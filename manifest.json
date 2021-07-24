@@ -40,5 +40,12 @@
             "description": "Sale Show/Hide",
             "global": false
         }
+    },
+    "icons": {
+        "16": "img/asf.png",
+        "24": "img/asf.png",
+        "32": "img/asf.png",
+        "48": "img/asf.png",
+        "128": "img/asf.png"
     }
 }

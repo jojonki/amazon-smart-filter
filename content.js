@@ -18,7 +18,6 @@ function filterProducts(filter) {
                     if (p_title_dom !== undefined) {
                         // console.log('title: ' + p_title_dom.textContent.substr(0, 20));
 
-
                         let time_sale_flag = false;
                         let badge_text = p.getElementsByClassName('a-badge-text')[0];
                         if (badge_text !== undefined) {
@@ -26,14 +25,20 @@ function filterProducts(filter) {
                             time_sale_flag = badge_text.textContent == 'タイムセール';
                         }
 
-                        let discount_flag = p.getElementsByClassName('a-text-price')[0] !== undefined;
+                        let discount_flag = false;
+                        let text_dom = p.getElementsByClassName('a-text-price')[0];
+                        if (text_dom !== undefined) {
+                            discount_flag = text_dom.getAttribute('data-a-strike') != undefined;
+                        }
+
                         let coupon_flag = p.getElementsByClassName('s-coupon-unclipped')[0] !== undefined;
-                        // console.log(time_sale_flag + ', ' + price_down_flag);
+
                         let sponsor_flag = false;
                         let may_sponsor_dom = p.getElementsByClassName('a-color-secondary')[0];
                         if (may_sponsor_dom !== undefined && may_sponsor_dom.textContent == 'スポンサー') {
                             sponsor_flag = true;
                         }
+
                         if (items.enable_associate) {
                             let link_list = document.getElementsByClassName('a-link-normal');
                             for (let j = 0; j < link_list.length; j++) {
@@ -53,6 +58,7 @@ function filterProducts(filter) {
                                 }
                             }
                         }
+                        console.log(time_sale_flag, sponsor_flag, coupon_flag, discount_flag);
 
                         if (filter) {
                             if (sponsor_flag) {
@@ -79,6 +85,8 @@ function filterProducts(filter) {
 
     });
 }
+// {/* <span class="a-price a-text-price" data-a-size="b" data-a-strike="true" 
+// data-a-color="secondary"><span class="a-offscreen">￥22,770</span><span aria-hidden="true">￥22,770</span></span> */}
 
 
 // Listen for messages
