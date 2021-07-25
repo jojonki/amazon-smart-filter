@@ -33,8 +33,21 @@ chrome.runtime.onInstalled.addListener(function (details) {
     }
 });
 
+var amazon_update_ts = 0;
+var amazon_update_detect = false;
 chrome.webNavigation.onHistoryStateUpdated.addListener((obj) => {
-    chrome.tabs.sendMessage(obj.tabId, {
-        command: "notify_history_state_updated",
-    });
+    if (obj.url.startsWith('https://www.amazon')) {
+        amazon_update_detect = true;
+        amazon_update_ts = obj.timeStamp;
+    }
+});
+
+chrome.webNavigation.onCompleted.addListener((obj) => {
+    if (amazon_update_detect && obj.timeStamp - amazon_update_ts < 1000) {
+        amazon_update_detect = false
+        chrome.tabs.sendMessage(obj.tabId, {
+            command: "notify_history_state_updated",
+        });
+    }
+    amazon_update_ts = obj.timeStamp;
 });
