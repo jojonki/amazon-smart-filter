@@ -83,8 +83,6 @@ function filterProducts(filter) {
 
     });
 }
-// {/* <span class="a-price a-text-price" data-a-size="b" data-a-strike="true" 
-// data-a-color="secondary"><span class="a-offscreen">￥22,770</span><span aria-hidden="true">￥22,770</span></span> */}
 
 
 // Listen for messages
@@ -103,7 +101,10 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
             chrome.storage.sync.get(['filter'], function (items) {
                 filterProducts(items.filter);
             });
-            filterProducts(true);
+        } else if (msg.command == "notify_history_state_updated") {
+            chrome.storage.sync.get(['filter'], function (items) {
+                filterProducts(items.filter);
+            });
         }
     }
 });
@@ -130,16 +131,8 @@ function applyFilter() {
     });
 }
 window.addEventListener("load", function load(event) {
-    // window.removeEventListener("load", load, false); //remove listener, no longer needed
-    let html = "window.history.pushState = function(a,b,c) { applyFilter(); };";
-    let headID = document.getElementsByTagName("head")[0];
-    let newScript = document.createElement('script');
-    newScript.type = 'text/javascript';
-    newScript.innerHTML = html;
-    headID.appendChild(newScript);
-
+    window.removeEventListener("load", load, false); //remove listener, no longer needed
     applyFilter();
 
     return;
 }, false);
-

@@ -25,11 +25,16 @@ chrome.runtime.onInstalled.addListener(function (details) {
             'enable_associate': true,
         };
         chrome.storage.sync.set(opts, function () {
-            // console.log('Option saved');
             chrome.runtime.openOptionsPage();
         });
     } else if (details.reason == "update") {
         // var thisVersion = chrome.runtime.getManifest().version;
         // console.log("Updated from " + details.previousVersion + " to " + thisVersion + "!");
     }
+});
+
+chrome.webNavigation.onHistoryStateUpdated.addListener((obj) => {
+    chrome.tabs.sendMessage(obj.tabId, {
+        command: "notify_history_state_updated",
+    });
 });

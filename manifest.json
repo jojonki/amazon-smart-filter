@@ -2,10 +2,11 @@
     "manifest_version": 3,
     "name": "Amazon Smart Filter",
     "description": "Amazonのお買い得商品のみを表示する",
-    "version": "0.1",
+    "version": "0.1.1",
     "permissions": [
         "activeTab",
-        "storage"
+        "storage",
+        "webNavigation"
     ],
     "background": {
         "service_worker": "background.js"
