@@ -21,7 +21,6 @@ function filterProducts(filter) {
                         let time_sale_flag = false;
                         let badge_text = p.getElementsByClassName('a-badge-text')[0];
                         if (badge_text !== undefined) {
-                            // console.log('badge text;' + badge_text.textContent);
                             time_sale_flag = badge_text.textContent == 'タイムセール';
                         }
 
@@ -58,7 +57,6 @@ function filterProducts(filter) {
                                 }
                             }
                         }
-                        console.log(time_sale_flag, sponsor_flag, coupon_flag, discount_flag);
 
                         if (filter) {
                             if (sponsor_flag) {
@@ -92,7 +90,6 @@ function filterProducts(filter) {
 // Listen for messages
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     if (msg.command) {
-        console.log('---' + msg.command);
         // toggle
         if (msg.command == "notify_command") {
             chrome.storage.sync.get(['filter'], function (items) {
@@ -103,9 +100,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
                 });
             });
         } else if (msg.command == "notify_loaded_page") {
-            console.log('-----44$')
             chrome.storage.sync.get(['filter'], function (items) {
-                console.log('----filter products ' + item.filter)
                 filterProducts(items.filter);
             });
             filterProducts(true);

@@ -13,7 +13,7 @@ function save_options() {
         opts[option_list[i]] = document.getElementById(option_list[i]).checked;
     }
     chrome.storage.sync.set(opts, function () {
-        console.log('Option saved');
+        // console.log('Option saved');
     });
 
     var status = document.getElementById('status');
