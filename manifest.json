@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Amazon セール フィルター",
+    "name": "Amazonセールフィルター",
     "description": "Amazonのセール品や割引商品といったお買い得商品のみを表示するフィルター機能を提供します．",
     "version": "0.1.2",
     "permissions": [
