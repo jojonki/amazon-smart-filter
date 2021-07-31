@@ -1,8 +1,8 @@
-{
+g
     "manifest_version": 3,
-    "name": "Amazon Smart Filter",
-    "description": "Amazonのお買い得商品のみを表示する",
-    "version": "0.1.1",
+    "name": "Amazon セール フィルター",
+    "description": "Amazonのセール品や割引商品といったお買い得商品のみを表示するフィルター機能を提供します．",
+    "version": "0.1.2",
     "permissions": [
         "activeTab",
         "storage",
