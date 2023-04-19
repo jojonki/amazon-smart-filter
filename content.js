@@ -1,4 +1,5 @@
-// alert('content');
+"use strict";
+
 function filterProducts(filter) {
   let option_list = [
     "show_time_sale",
@@ -84,8 +85,11 @@ function filterProducts(filter) {
                   products[i].style.display = "none";
                 }
               } else if (time_sale_flag && items.show_time_sale) {
+                // pass
               } else if (coupon_flag && items.show_coupon) {
+                // pass
               } else if (discount_flag && items.show_discount) {
+                // pass
               } else {
                 products[i].style.display = "none";
               }

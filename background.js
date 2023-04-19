@@ -1,4 +1,5 @@
 "use strict";
+
 chrome.commands.onCommand.addListener(function (command) {
   if (command == "sale-filter-toggle") {
     chrome.tabs.query(
